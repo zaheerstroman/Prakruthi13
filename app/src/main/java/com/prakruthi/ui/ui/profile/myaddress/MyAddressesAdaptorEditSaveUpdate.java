@@ -1,0 +1,195 @@
+package com.prakruthi.ui.ui.profile.myaddress;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.prakruthi.R;
+import com.prakruthi.ui.APIs.DeleteDeliveryAddressDetails;
+import com.prakruthi.ui.APIs.GetMyDeliveryAddressDetails;
+import com.prakruthi.ui.APIs.GetMyDeliveryAddressDetailsAsyncTask;
+import com.prakruthi.ui.APIs.SaveDeliveryAddressDetailsEditUpdate;
+import com.prakruthi.ui.misc.Loading;
+import com.prakruthi.ui.ui.AddressUserDetails;
+import com.prakruthi.ui.ui.home.address.Address_BottomSheet_Recycler_Adaptor_Model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MyAddressesAdaptorEditSaveUpdate extends RecyclerView.Adapter<MyAddressesAdaptorEditSaveUpdate.ViewHolder> {
+
+    ImageView iv_edit_yourAddress;
+
+    String name;
+    String city;
+    String state;
+    String id;
+    String country;
+    String address;
+    String postalCode;
+    boolean isDefault;
+
+
+    private ArrayList<Address_BottomSheet_Recycler_Adaptor_Model> addressModelsList = new ArrayList<>();
+
+
+    public Context context;
+
+    EditText cityEditText, stateEditText, addressEditText, postalCodeEditText, cityEditText_edit, stateEditText_edit;
+
+    View dialogView;
+    private List<String> data;
+
+    DeleteDeliveryAddressDetails.OnDeleteDeliveryAddressApiHits deleteDeliveryAddressListner;
+
+    GetMyDeliveryAddressDetails.GetMyDeliveryAddressDetailsFetchedListener getMyDeliveryAddressDetailsFetchedListener;
+
+    GetMyDeliveryAddressDetailsAsyncTask.onGetMyDeliveryAddressDetailsDataFetchedListner getMyDeliveryAddressDetailsDataFetchedListner;
+    SaveDeliveryAddressDetailsEditUpdate.OnSaveDeliveryAddressDetailsEditUpdateApiHitsListner saveDeliveryAddressDetailsEditUpdateListner;
+
+public MyAddressesAdaptorEditSaveUpdate(ArrayList<Address_BottomSheet_Recycler_Adaptor_Model> addressModelsList,SaveDeliveryAddressDetailsEditUpdate.OnSaveDeliveryAddressDetailsEditUpdateApiHitsListner saveDeliveryAddressDetailsEditUpdateListner, String name, String city, String state, String id, String country, String address, String postalCode) {
+
+    this.addressModelsList.clear();
+
+    this.addressModelsList = addressModelsList;
+
+        this.getMyDeliveryAddressDetailsFetchedListener = getMyDeliveryAddressDetailsFetchedListener;
+        this.saveDeliveryAddressDetailsEditUpdateListner = saveDeliveryAddressDetailsEditUpdateListner;
+
+        this.name = name;
+        this.city = city;
+        this.state = state;
+        this.id = id;
+        this.country = country;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.context = context;
+    }
+
+    @NonNull
+    @Override
+    public MyAddressesAdaptorEditSaveUpdate.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.personal_myaddress_layout_add, parent, false);
+
+        return new MyAddressesAdaptorEditSaveUpdate.ViewHolder(view);
+
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyAddressesAdaptorEditSaveUpdate.ViewHolder holder, int position) {
+        try {
+
+            Address_BottomSheet_Recycler_Adaptor_Model addressModel = addressModelsList.get(position);
+
+            holder.txtName.setText(addressModel.getName());
+            holder.txtAddress.setText(addressModel.getAddress());
+
+            holder.txt_personal_my_address_state.setText(addressModel.getState());
+            holder.txt_personal_my_address_city.setText(addressModel.getCity());
+
+
+            holder.txtRemove.setOnClickListener(v -> {
+                Loading.show(holder.itemView.getContext());
+                DeleteDeliveryAddressDetails deleteDeliveryAddressDetails = new DeleteDeliveryAddressDetails(deleteDeliveryAddressListner, addressModel.getId());
+                deleteDeliveryAddressDetails.HitApi();
+            });
+
+            holder.iv_edit_yourAddress.setOnClickListener(v -> {
+                Loading.show(holder.itemView.getContext());
+
+                SaveDeliveryAddressDetailsEditUpdate saveDeliveryAddressDetailsEditUpdate = new SaveDeliveryAddressDetailsEditUpdate(saveDeliveryAddressDetailsEditUpdateListner, name, city, state, id, country, address, postalCode,boolToInt(isDefault));
+                saveDeliveryAddressDetailsEditUpdate.HitSaveDeliveryAddressDetailsEditUpdateApiApi();
+
+                GetMyDeliveryAddressDetailsAsyncTask getMyDeliveryAddressDetailsAsyncTask = new GetMyDeliveryAddressDetailsAsyncTask(
+                        getMyDeliveryAddressDetailsDataFetchedListner,id);
+                getMyDeliveryAddressDetailsAsyncTask.HitMyDeliveryAddressDetailsApi();
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public int boolToInt(boolean value) {
+        return value ? 1 : 0;
+    }
+
+
+    private void showDialog() {
+
+        final Dialog dialogView = new Dialog(context);
+        dialogView.setContentView(R.layout.dialog_edit_address);
+        dialogView.setCancelable(true);
+
+        // Set the dialog's window width to match_parent
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialogView.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        dialogView.getWindow().setAttributes(layoutParams);
+
+
+
+        EditText nameEditText = dialogView.findViewById(R.id.edittext_name_edit);
+        stateEditText = dialogView.findViewById(R.id.editTextState_edit);
+        cityEditText = dialogView.findViewById(R.id.edittext_city_edit);
+        EditText countryEditText = dialogView.findViewById(R.id.edittext_country_edit);
+        EditText addressEditText = dialogView.findViewById(R.id.edittext_address_edit);
+        EditText postalCodeEditText = dialogView.findViewById(R.id.edittext_postal_code_edit);
+        CheckBox defaultCheckBox = dialogView.findViewById(R.id.checkbox_default_edit);
+
+        Button buttonSubmit = dialogView.findViewById(R.id.edit_address_btn_save);
+
+        // Add click listener to the Submit button
+        nameEditText.setText(AddressUserDetails.name);
+        stateEditText.setText(AddressUserDetails.state);
+        cityEditText.setText(AddressUserDetails.city);
+        countryEditText.setText(AddressUserDetails.country);
+        addressEditText.setText(AddressUserDetails.address);
+        postalCodeEditText.setText(AddressUserDetails.postal_code);
+        defaultCheckBox.setText(AddressUserDetails.is_default);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return addressModelsList.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtName;
+        TextView txtAddress;
+
+        TextView txt_personal_my_address_state, txt_personal_my_address_city;
+
+        EditText cityEditText, stateEditText, addressEditText, postalCodeEditText, cityEditText_edit, stateEditText_edit;
+
+        ImageView iv_edit_yourAddress;
+
+        AppCompatButton txtRemove;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            txtName = itemView.findViewById(R.id.myAddresses_Name);
+            txtAddress = itemView.findViewById(R.id.txt_personal_my_address);
+            txt_personal_my_address_state = itemView.findViewById(R.id.txt_personal_my_address_state);
+            txt_personal_my_address_city = itemView.findViewById(R.id.txt_personal_my_address_city);
+
+            iv_edit_yourAddress = itemView.findViewById(R.id.iv_edit_yourAddress);
+            txtRemove = itemView.findViewById(R.id.txt_remove);
+        }
+    }
+}

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/NesterScrollViewCart"
+    android:layout_height="700dp"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        tools:context=".ui.ui.profile.SupportActivity">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="90dp"
+            android:src="@drawable/top" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Prakruti Village Mart"
+                android:textColor="@color/projectblue"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivcaller"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/caller" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+
+            android:id="@+id/ll_landphone"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/ivcontacticon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="40dp"
+                android:src="@drawable/landline" />
+
+
+            <TextView
+                android:id="@+id/tvlandcall"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ivcontacticon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:paddingTop="05dp"
+                android:text="040-40138904"
+                android:textAlignment="center"
+                android:textColor="@color/toolbar_color"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+
+        <!--            android:text="+91 - 93907 80314"-->
+        <RelativeLayout
+
+            android:id="@+id/ll_whatsapp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/ivcontacticon1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="40dp"
+                android:src="@drawable/whatsapp" />
+
+
+            <TextView
+                android:id="@+id/tvwhatsup"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ivcontacticon1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:paddingTop="05dp"
+                android:text="+91-9390780314"
+                android:textAlignment="center"
+                android:textColor="@color/toolbar_color"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:id="@+id/ll_normalcall"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/ivcontacticon2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="40dp"
+                android:src="@drawable/call" />
+
+
+            <TextView
+                android:id="@+id/tvnormalcall"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ivcontacticon2"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:paddingTop="05dp"
+                android:text="+91-9492650314"
+                android:textAlignment="center"
+                android:textColor="@color/toolbar_color"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+
+            android:id="@+id/ll_email"
+
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/ivmailicon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+
+                android:layout_centerVertical="true"
+                android:layout_marginStart="40dp"
+                android:src="@drawable/mail" />
+
+            <!--            android:text="info@prakruthiepl.com"-->
+
+            <TextView
+                android:id="@+id/tvemail"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ivmailicon"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="help@prakruthiepl.com"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/ll_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/ivlinkicon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="40dp"
+                android:src="@drawable/location" />
+
+
+            <!--            android:text="7-1-617/A, Imperial Towers, 301, 3rd Floor,\nAmeerpet, Hyderabad, Telangana,\nIndia - 500038.#1-6-69/1/26/A/1, Paramount Apartment, 2nd Floor, DK Road, Balkampet, Ameerpet, Hyderabad - 500018"-->
+            <!--            android:text="#1-6-69/1/26/A/1, Paramount Apartment, 2nd Floor, DK Road, Balkampet, Ameerpet, Hyderabad - 500018."-->
+            <!--            android:text="7-1-617/A, Imperial Towers, 301, 3rd Floor,\nAmeerpet, Hyderabad, Telangana,\nIndia - 500038. \n#1-6-69/1/26/A/1, Paramount Apartment, 2nd Floor, DK Road, Balkampet, Ameerpet, Hyderabad - 500018.#1-6-69/1/26/A/1, Paramount Apartme"-->
+            <!--        android:text="7-1-617/A, Imperial Towers, 301, 3rd Floor,\nAmeerpet, Hyderabad, Telangana,\nIndia - 500038. \n#1-6-69/1/26/A/1, Paramount Apartment, 2nd Floor, DK Road, Balkampet, Ameerpet, Hyderabad - 500018.#1-6-69/1/26/A/1, Paramount Apartme"-->
+
+
+            <TextView
+                android:id="@+id/tvlocation"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ivlinkicon"
+                android:padding="5dp"
+                android:text="#1-6-69/1/26/A/1, \nParamount Apartment, \n2nd Floor, DK Road, Balkampet, Ameerpet, Hyderabad - 500018."
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+
+
+                />
+
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/quotes"
+            android:paddingTop="30dp"
+            android:layout_marginRight="250dp"/>
+
+        <TextView
+            android:id="@+id/textview1"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/buttonshape_purpule_blue"
+            android:backgroundTint="@color/Primary"
+            android:text="Thank you for choosing us \nPrakruthi Village Mart \nOur Customercare Executive\n will get back you...!"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/quotes2"
+            android:layout_marginLeft="180dp"/>
+
+        <ImageView
+            android:id="@+id/line"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="110dp"
+            android:src="@drawable/line"
+            android:paddingTop="30dp"/>
+
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="80dp"
+            android:src="@drawable/bottom" />
+
+
+    </LinearLayout>
+</ScrollView>

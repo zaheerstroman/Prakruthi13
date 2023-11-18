@@ -1,0 +1,163 @@
+package com.prakruthi.ui.APIs;
+
+import static com.google.firebase.messaging.Constants.TAG;
+
+import android.util.Log;
+
+import com.prakruthi.ui.Variables;
+import com.vishnusivadas.advanced_httpurlconnection.PutData;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+public class AddToBuy {
+
+    String Productid , quantity, id;
+
+    boolean edit = false;
+
+    OnAddToBuyDataFetchedListner mListner;
+
+    public AddToBuy(String productid , String quantity , String id , boolean edit , OnAddToBuyDataFetchedListner listner)
+    {
+        this.Productid = productid;
+        this.edit = edit;
+        this.quantity = quantity;
+        this.id = id;
+        mListner = listner;
+    }
+
+    public void fetchData()
+    {
+        Executor executor = Executors.newSingleThreadExecutor();
+        if (edit)
+        {
+            executor.execute(new editBuyItem());
+        }
+        else
+        {
+            executor.execute(new AddtoBuyItem());
+        }
+    }
+
+    private class AddtoBuyItem implements Runnable
+    {
+        @Override
+        public void run() {
+            //Creating array for parameters
+            String[] field = new String[5];
+            field[0] = "user_id";
+            field[1] = "token";
+            field[2] = "product_id";
+            field[3] = "quantity";
+            field[4] = "id";
+
+            //Creating array for data
+            String[] data = new String[5];
+            data[0] = String.valueOf(Variables.id);
+            data[1] = Variables.token;
+            data[2] = Productid;
+            data[3] = quantity;
+            data[4] = id;
+
+
+            PutData putData = new PutData(Variables.BaseUrl+"addToBuy", "POST", field, data);
+
+            if (putData.startPut()) {
+                if (putData.onComplete()) {
+                    String result = putData.getResult();
+                    Log.e(TAG, result );
+                    try {
+                        JSONObject response = new JSONObject(result);
+
+                        // Extract the "message" string
+                        String message = response.getString("message");
+
+                        // Use the "message" string as needed
+                        handleResponseAdd(message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        handleError("Internal Error");
+                    }
+                } else {
+                    handleError("Failed to fetch data");
+                }
+            } else {
+                handleError("Failed to connect to server");
+            }
+        }
+    }
+
+    private class editBuyItem implements Runnable
+    {
+        @Override
+        public void run() {
+            //Creating array for parameters
+            String[] field = new String[6];
+            field[0] = "user_id";
+            field[1] = "token";
+            field[2] = "product_id";
+            field[3] = "quantity";
+            field[4] = "id";
+            field[5] = "remove";
+            //Creating array for data
+            String[] data = new String[6];
+            data[0] = String.valueOf(Variables.id);
+            data[1] = Variables.token;
+            data[2] = Productid;
+            data[3] = quantity;
+            data[4] = id;
+            data[5] = "yes";
+
+            PutData putData = new PutData(Variables.BaseUrl+"addToBuy", "POST", field, data);
+            if (putData.startPut()) {
+                if (putData.onComplete()) {
+                    String result = putData.getResult();
+                    Log.e(TAG, result );
+                    try {
+                        JSONObject response = new JSONObject(result);
+
+                        // Extract the "message" string
+                        String message = response.getString("message");
+
+                        // Use the "message" string as needed
+                        handleResponseEdit(message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    handleError("Failed to fetch data");
+                }
+            } else {
+                handleError("Failed to connect to server");
+            }
+        }
+    }
+
+    private void handleError(String failed_to_fetch_data) {
+        mListner.OnErrorFetched(failed_to_fetch_data);
+    }
+
+    private void handleResponseAdd(String result) {
+        mListner.OnAddtoBuyDataFetched(result);
+    }
+
+    private void handleResponseEdit(String result) {
+        mListner.OnBuyeditDataFetched(result);
+    }
+
+    public interface OnAddToBuyDataFetchedListner
+    {
+        void OnBuyeditDataFetched(String Message);
+
+        void OnAddtoBuyDataFetched(String Message);
+
+        void OnErrorFetched(String Error);
+    }
+
+
+
+}
